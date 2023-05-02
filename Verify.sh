@@ -22,7 +22,7 @@ do
 	case "${flag}" in
 		f) file=${OPTARG};;
 		c) checksum=${OPTARG};;
-		a) algorithm=${echo OPTARG | tr '[:lower:]' '[:upper:]'};;
+		a) algorithm=$(echo $OPTARG | tr '[:lower:]' '[:upper:]');;
 	esac
 done
 
@@ -43,6 +43,8 @@ fi
 echo "${bold}Algorithm:${normal} $algorithm"
 
 file_checksum="$(openssl $algorithm $file | awk '{ print $2 }')"
+
+echo "${bold}Calculated Checksum:${normal} $file_checksum"
 
 if [[ $checksum = $file_checksum ]]
 then
